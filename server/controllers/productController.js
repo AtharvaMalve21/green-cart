@@ -143,8 +143,40 @@ exports.filterProductByCategory = async (req, res) => {
   }
 };
 
+//only admins can access this route
 exports.changeStock = async (req, res) => {
   try {
+    //authenticate user
+    const userId = req.user._id;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "No User found.",
+      });
+    }
+
+    //find the product
+    const { id } = req.params;
+    const product = await Product.findById(id);
+    if (!product) {
+      return res.status(400).json({
+        success: false,
+        message: "No Product found.",
+      });
+    }
+
+    //update the status
+    product.inStock = true;
+    await product.save();
+
+    //return response
+    return res.status(200).json({
+      success: true,
+      data: product,
+      message: "Stock updated.",
+    });
   } catch (err) {
     res.status(500).json({
       success: false,

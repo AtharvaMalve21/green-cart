@@ -7,6 +7,7 @@ const {
   getProducts,
   viewProduct,
   filterProductByCategory,
+  changeStock,
   deleteProduct,
 } = require("../controllers/productController");
 
@@ -22,6 +23,12 @@ router.post(
 router.get("/", getProducts);
 router.get("/filter", filterProductByCategory);
 router.get("/:id", viewProduct);
-router.delete("/:id", deleteProduct);
+router.put(
+  "/change-stock",
+  isAuthenticated,
+  isAuthorized("Admin"),
+  changeStock
+);
+router.delete("/:id", isAuthenticated, isAuthorized("Admin"), deleteProduct);
 
 module.exports = router;
