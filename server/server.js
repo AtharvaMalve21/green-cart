@@ -9,6 +9,7 @@ const connectDB = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const productRoutes = require("./routes/productRoutes");
+const cartRoutes = require("./routes/cartRoutes");
 
 dotenv.config();
 const app = express();
@@ -33,6 +34,7 @@ connectDB();
 app.use("/api/user", userRoutes);
 app.use("/api/message", messageRoutes);
 app.use("/api/product", productRoutes);
+app.use("/api/cart", cartRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Green Cart!" });
