@@ -42,6 +42,15 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
+            {!user && (
+              <Link
+                to="/admin"
+                className="bg-indigo-100 text-indigo-700 px-3 py-1.5 text-sm rounded-full hover:bg-indigo-300 hover:text-indigo-900 transition duration-200 shadow-sm"
+              >
+                Admin Panel
+              </Link>
+            )}
+
             <Link
               to="/"
               className="text-gray-700 hover:text-indigo-600 transition"
@@ -95,11 +104,11 @@ const Navbar = () => {
             {/* User Profile Dropdown */}
             {user ? (
               <div className="relative group">
-                <img
-                  src={`${URI}/${user.profilePic}`}
-                  alt="Profile"
-                  className="w-10 h-10 rounded-full border-2 border-indigo-500 cursor-pointer object-cover"
-                />
+                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center text-white font-semibold text-lg cursor-pointer">
+                  {user?.name?.charAt(0).toUpperCase() ||
+                    user?.email?.charAt(0).toUpperCase()}
+                </div>
+
                 <div className="absolute top-12 right-0 bg-white border rounded-lg shadow-md w-40 py-2 opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-10">
                   <Link
                     to="/profile"
@@ -148,6 +157,15 @@ const Navbar = () => {
         } bg-white border-t`}
       >
         <div className="flex flex-col gap-4 px-6 py-4 text-sm">
+          {!user && (
+            <Link
+              to="/admin"
+              className="bg-indigo-100 text-indigo-700 px-3 py-1.5 text-sm rounded-full hover:bg-indigo-300 hover:text-indigo-900 transition duration-200 shadow-sm"
+            >
+              Admin Panel
+            </Link>
+          )}
+
           <Link
             to="/"
             className="text-gray-700 hover:text-indigo-600"

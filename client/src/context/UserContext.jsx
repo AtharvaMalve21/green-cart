@@ -25,6 +25,7 @@ export const UserContextProvider = ({ children }) => {
 
       if (data.success) {
         setUser(data.data);
+        setIsLoggedIn(true);
       }
     } catch (err) {
       console.log(err.response?.data.message);

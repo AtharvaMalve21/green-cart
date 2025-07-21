@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLoader } from "../context/LoaderContext.jsx";
 import {
   LockClosedIcon,
   EyeIcon,
@@ -13,6 +14,7 @@ import { toast } from "react-hot-toast";
 
 const Login = () => {
   const { setIsLoggedIn } = useContext(UserContext);
+  const { setLoading } = useLoader();
 
   const URI = import.meta.env.VITE_BACKEND_URI;
 
@@ -23,8 +25,10 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const loginUserAccount = async (ev) => {
+    ev.preventDefault();
+
     try {
-      ev.preventDefault();
+      setLoading(true); // start loader
 
       const { data } = await axios.post(
         URI + "/api/user/login",
@@ -46,7 +50,9 @@ const Login = () => {
         navigate("/");
       }
     } catch (err) {
-      toast.error(err.response?.data.message);
+      toast.error(err.response?.data.message || "Login failed");
+    } finally {
+      setLoading(false); // stop loader
     }
   };
 
