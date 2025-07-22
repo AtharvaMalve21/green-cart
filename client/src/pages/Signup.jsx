@@ -62,7 +62,7 @@ const Signup = () => {
         <div className="flex flex-col items-center mb-6">
           <LockClosedIcon className="w-12 h-12 text-indigo-600" />
           <h2 className="mt-4 text-2xl font-bold text-gray-800">
-            Sign in to your account
+            Create an Account
           </h2>
         </div>
 

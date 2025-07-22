@@ -8,6 +8,8 @@ import BestSeller from "../components/BestSeller";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { ProductContext } from "../context/ProductContext";
+import BottomBanner from "../components/BottomBanner";
+import NewsLetter from "../components/NewsLetter";
 
 const Home = () => {
   
@@ -35,6 +37,8 @@ const Home = () => {
       <MainBanner />
       <Categories />
       <BestSeller />
+      <BottomBanner />
+      <NewsLetter />
     </div>
   );
 };

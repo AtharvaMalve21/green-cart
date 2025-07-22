@@ -18,8 +18,12 @@ import ProtectedAdminRoute from "./components/admin/ProtectedAdminRoute.jsx";
 import ProtectedUserRoute from "./pages/user/ProtectedUserRoute.jsx";
 import GlobalLoader from "./components/GlobalLoader.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import Footer from "./components/Footer.jsx";
+import { AdminContext } from "./context/AdminContext.jsx";
 
 const App = () => {
+  const { admin } = useContext(AdminContext);
+
   return (
     <>
       <GlobalLoader />
@@ -63,6 +67,7 @@ const App = () => {
         </Route>
         <Route path="/admin-login" element={<AdminLoginPanel />} />
       </Routes>
+      {!admin && <Footer />}
     </>
   );
 };
