@@ -1,28 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { dummyProducts } from "../assets/assets";
-import ProductCart from "../components/ProductCart";
+import Products from "./Products";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { ProductContext } from "../context/ProductContext";
 
 const ProductCategory = () => {
   const { category } = useParams();
 
-  const [products, setProducts] = useState([]);
+  const { setProducts } = useContext(ProductContext);
 
-  const filteredProducts = () => {
-    setProducts(() => {
-      return dummyProducts.filter(
-        (p) => p.category.toLocaleLowerCase() == category
-      );
-    });
+  const URI = import.meta.env.VITE_BACKEND_URI;
+
+  const filteredProducts = async () => {
+    try {
+      const { data } = await axios.get(`${URI}/api/product/filter`, {
+        params: {
+          category: category,
+        },
+      });
+      if (data.success) {
+        setProducts(data.data);
+      }
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
   };
 
   useEffect(() => {
     filteredProducts();
-  }, []);
+  }, [category]);
 
   return (
     <div>
-      <ProductCart dummyProducts={products} />
+      <Products />
     </div>
   );
 };

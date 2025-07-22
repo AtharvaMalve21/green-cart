@@ -44,16 +44,16 @@ export const isAuthenticated = async (req, res, next) => {
 export const isAdmin = async (req, res, next) => {
   try {
 
-    const { admintoken } = req.cookies;
+    const { adminToken } = req.cookies;
 
-    if (!admintoken) {
+    if (!adminToken) {
       return res.status(401).json({
         success: false,
         message: "Access denied. Admin token missing.",
       });
     }
 
-    const decodedToken = jwt.verify(admintoken, process.env.JWT_SECRET);
+    const decodedToken = jwt.verify(adminToken, process.env.JWT_SECRET);
 
     req.admin = decodedToken.email;
 

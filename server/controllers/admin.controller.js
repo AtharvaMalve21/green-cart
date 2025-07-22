@@ -4,6 +4,7 @@ dotenv.config();
 
 export const adminLogin = async (req, res) => {
   try {
+
     //fetch the admin details
     const { email, password } = req.body;
 
@@ -41,7 +42,7 @@ export const adminLogin = async (req, res) => {
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     };
 
-    res.cookie("admintoken", adminToken, cookieOptions);
+    res.cookie("adminToken", adminToken, cookieOptions);
 
     return res.status(200).json({
       success: true,
@@ -57,13 +58,14 @@ export const adminLogin = async (req, res) => {
 
 export const adminLogout = async (req, res) => {
   try {
+    
     const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     };
 
-    res.clearCookie("admintoken", cookieOptions);
+    res.clearCookie("adminToken", cookieOptions);
 
     return res.status(200).json({
       success: true,

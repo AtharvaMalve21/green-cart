@@ -201,6 +201,7 @@ export const features = [
 ];
 
 export const dummyProducts = [
+  
   // Vegetables
   {
     _id: "gd46g23h",

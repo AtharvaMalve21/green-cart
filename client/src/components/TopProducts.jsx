@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { ProductContext } from "../context/ProductContext";
 import { useNavigate } from "react-router-dom";
 
-const Products = () => {
+const TopProducts = () => {
   const { products } = useContext(ProductContext);
 
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const Products = () => {
   return (
     <div className="p-4">
       <div className="flex flex-wrap justify-center gap-x-4 gap-y-6">
-        {products.map((product) => (
+        {products.slice(0, 10).map((product) => (
           <div
             key={product._id}
             onClick={() =>
@@ -84,4 +84,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default TopProducts;

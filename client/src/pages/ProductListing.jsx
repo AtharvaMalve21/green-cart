@@ -1,35 +1,55 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { StarIcon } from "@heroicons/react/24/solid";
+import toast from "react-hot-toast";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { dummyProducts } from "../assets/assets.js";
-import { toast } from "react-hot-toast";
-import { ProductContext } from "../context/ProductContext.jsx";
 
 const ProductListing = () => {
-  const { items, setItems, setCartItems, setTotalPrice } =
-    useContext(ProductContext);
+  const [product, setProduct] = useState(null);
+
+  const [selectedImageIndex, setSelectedImageIndex] = useState(1);
+
+  const [filteredProductsByCategory, setFilteredProductsByCategory] = useState(
+    []
+  );
 
   const { category, id } = useParams();
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  const URI = import.meta.env.VITE_BACKEND_URI;
 
   const navigate = useNavigate();
 
-  const filteredProductsByCategory = dummyProducts.filter(
-    (product) => product.category.toLowerCase() === category
-  );
+  const fetchProductDetails = async () => {
+    try {
+      const { data } = await axios.get(`${URI}/api/product/${id}`);
 
-  const product = filteredProductsByCategory.find((item) => item._id === id);
-
-  const addItemsToCart = (product) => {
-    setItems(items + 1);
-
-    setCartItems((prevItems) => [...prevItems, product]);
-
-    setTotalPrice((prevPrice) => prevPrice + product.price);
-
-    toast.success(`${product.name} added to cart`);
+      if (data.success) {
+        setProduct(data.data);
+      }
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
   };
+
+  const fetchProductDetailsByCategory = async () => {
+    try {
+      const { data } = await axios.get(
+        `${URI}/api/product/filter?category=${category}`
+      );
+
+      if (data.success) {
+        setFilteredProductsByCategory(data.data);
+      }
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchProductDetailsByCategory();
+    fetchProductDetails();
+  }, [category, id]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -43,19 +63,19 @@ const ProductListing = () => {
 
       {/* Product Info */}
       {product && (
-        <div className="grid md:grid-cols-2 gap-10 bg-white p-6 rounded-xl shadow">
+        <div className="grid md:grid-cols-2 gap-10 bg-white p-6 rounded-xl shadow-md">
           {/* Image Gallery */}
           <div>
             {/* Main Image */}
             <img
-              src={product.image[selectedImageIndex]}
+              src={product.images[selectedImageIndex]}
               alt={product.name}
-              className="w-full h-[400px] object-cover rounded-lg shadow-sm mb-4"
+              className="w-full h-[400px] bg-green-50 object-cover rounded-lg shadow-sm mb-4"
             />
 
             {/* Thumbnails */}
             <div className="flex gap-3 overflow-x-auto">
-              {product.image.map((img, index) => (
+              {product.images.map((img, index) => (
                 <img
                   key={index}
                   src={img}
@@ -93,12 +113,7 @@ const ProductListing = () => {
 
             {/* Action Buttons */}
             <div className="mt-6 flex gap-4">
-              <button
-                onClick={() => {
-                  addItemsToCart(product);
-                }}
-                className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
-              >
+              <button className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
                 Add to Cart
               </button>
               <button className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition">
@@ -117,20 +132,20 @@ const ProductListing = () => {
             <div
               onClick={() => {
                 navigate(
-                  `/products/${product.category.toLocaleLowerCase()}/${
-                    product._id
-                  }`
+                  `/products/${product.category.toLowerCase()}/${product._id}`
                 );
               }}
               key={product._id}
-              className="bg-white cursor-pointer rounded-xl shadow hover:shadow-md transition duration-300 p-3 flex flex-col"
+              className="bg-white cursor-pointer rounded-xl shadow hover:shadow-lg transition-transform transform hover:-translate-y-1 duration-300 p-3 flex flex-col"
             >
-              {/* Product Image */}
-              <img
-                src={product.image[0]}
-                alt={product.name}
-                className="w-full h-32 object-cover rounded-md mb-3"
-              />
+              {/* Product Image with bg-green-50 */}
+              <div className="bg-green-50 rounded-md mb-4">
+                <img
+                  src={product.images[0]}
+                  alt={product.name}
+                  className="w-full h-44 object-cover rounded-md transition-transform duration-300 hover:scale-105"
+                />
+              </div>
 
               {/* Category + Name */}
               <div className="flex flex-col gap-1 mb-2">
@@ -160,10 +175,11 @@ const ProductListing = () => {
                 </div>
 
                 <button
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     addItemsToCart(product);
                   }}
-                  className="flex items-center gap-1 bg-green-500 text-white px-3 py-1.5 rounded hover:bg-green-600 transition text-sm"
+                  className="flex items-center gap-1 bg-green-500 text-white px-3 py-1.5 rounded hover:bg-green-600 transition-all duration-300 text-sm hover:scale-105"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -187,10 +203,10 @@ const ProductListing = () => {
         </div>
 
         {/* See More Link */}
-        <div className="mt-6 text-center">
+        <div className="mt-8 text-center">
           <Link
             to="/products"
-            className="text-blue-600 hover:underline font-medium"
+            className="inline-block px-5 py-2 border border-blue-600 text-blue-600 rounded-full font-semibold transition-all duration-300 hover:bg-blue-600 hover:text-white hover:shadow-md"
           >
             See More
           </Link>

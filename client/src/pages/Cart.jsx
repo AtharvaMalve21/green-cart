@@ -2,8 +2,6 @@ import React, { useContext } from "react";
 import { ProductContext } from "../context/ProductContext";
 import { toast } from "react-hot-toast";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import ProductCart from "../components/ProductCart.jsx";
-import { dummyProducts } from "../assets/assets";
 import { OrderContext } from "../context/OrderContext.jsx";
 
 const Cart = () => {
@@ -111,7 +109,7 @@ const Cart = () => {
           <h2 className="text-xl font-semibold text-gray-700">
             No Items added to Cart
           </h2>
-          <ProductCart dummyProducts={dummyProducts} />
+          <Products />
         </div>
       )}
     </div>

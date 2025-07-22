@@ -1,6 +1,5 @@
 import React from "react";
-import { dummyProducts } from "../assets/assets";
-import ProductCart from "./ProductCart";
+import TopProducts from "./TopProducts";
 
 const BestSeller = () => {
   return (
@@ -14,7 +13,7 @@ const BestSeller = () => {
           top stars.
         </p>
       </div>
-      <ProductCart dummyProducts={dummyProducts} />
+      <TopProducts />
     </div>
   );
 };
