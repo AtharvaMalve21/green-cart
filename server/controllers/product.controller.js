@@ -66,6 +66,7 @@ export const addProduct = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
   try {
+
     const products = await Product.find({});
 
     return res.status(200).json({
@@ -134,6 +135,7 @@ export const viewProduct = async (req, res) => {
 
 export const changeStock = async (req, res) => {
   try {
+    
     const { id: productId } = req.params;
     const product = await Product.findById(productId);
     if (!product) {
