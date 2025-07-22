@@ -29,16 +29,12 @@ const Contact = () => {
   const sendMessage = async (ev) => {
     ev.preventDefault();
     try {
-      const { data } = await axios.post(
-        URI + "/api/message/send",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
+      const { data } = await axios.post(URI + "/api/message/send", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
 
       if (data.success) {
         setMessages(data.data);
@@ -55,7 +51,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-80px)] bg-gray-50 flex items-center justify-center px-4 py-12">
+    <div className="h-[calc(100vh-80px)] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-5xl bg-white rounded-lg shadow-lg overflow-hidden md:flex">
         {/* Contact Info */}
         <div className="bg-indigo-600 text-white w-full md:w-1/2 p-8 flex flex-col justify-center">
@@ -78,7 +74,7 @@ const Contact = () => {
         </div>
 
         {/* Contact Form */}
-        <div className="w-full md:w-1/2 p-8">
+        <div className="w-full bg-gradient-to-b from-blue-100 via-blue-50 to-white md:w-1/2 p-8">
           <h2 className="text-2xl font-semibold mb-6 text-gray-800">
             Send us a message
           </h2>

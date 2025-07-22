@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { StarIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const ProductListing = () => {
   const [product, setProduct] = useState(null);
 
-  const [selectedImageIndex, setSelectedImageIndex] = useState(1);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const [filteredProductsByCategory, setFilteredProductsByCategory] = useState(
     []

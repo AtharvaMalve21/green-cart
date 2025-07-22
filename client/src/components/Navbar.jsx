@@ -4,11 +4,12 @@ import { assets } from "../assets/assets.js";
 import { UserContext } from "../context/UserContext.jsx";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { ProductContext } from "../context/ProductContext.jsx";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+
+  const [items,setItems] = useState(0);
 
   const { user, isLoggedIn, setIsLoggedIn, setUser } = useContext(UserContext);
   const URI = import.meta.env.VITE_BACKEND_URI;
@@ -94,6 +95,9 @@ const Navbar = () => {
                 alt="Cart"
                 className="w-6 opacity-70 hover:opacity-100 transition"
               />
+              <span className="absolute -top-2 -right-3 bg-green-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                {items}
+              </span>
             </div>
 
             {/* User Profile Dropdown */}
