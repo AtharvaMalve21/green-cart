@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Outfit:wght@100..900&display=swap');
+
+/* * {
+    font-family: "Outfit", sans-serif;
+} */
+
 ::-webkit-scrollbar {
     display: none;
 }

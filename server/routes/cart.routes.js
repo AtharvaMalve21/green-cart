@@ -5,22 +5,18 @@ import {
   viewCart,
   removeItemsFromCart,
   clearCart,
+  updateCartItemQuantity,
 } from "../controllers/cart.controller.js";
 import { isAuthenticated } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-// Add a product to the cart
-router.post("/:id", isAuthenticated, addItemsToCart);
-
+// Authenticated users only
 router.get("/", isAuthenticated, getCartItems);
-
 router.get("/view", isAuthenticated, viewCart);
-
-// Remove a product (or reduce quantity) from the cart
 router.delete("/:id", isAuthenticated, removeItemsFromCart);
-
-// Clear the entire cart
+router.put("/", isAuthenticated, updateCartItemQuantity);
 router.delete("/clear", isAuthenticated, clearCart);
+router.post("/:id", isAuthenticated, addItemsToCart);
 
 export default router;

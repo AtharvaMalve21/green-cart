@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { StarIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import RelatedProducts from "../components/RelatedProducts";
+import { CartItemContext } from "../context/CartItemContext";
 
 const ProductListing = () => {
   const [product, setProduct] = useState(null);
@@ -20,6 +21,27 @@ const ProductListing = () => {
   const URI = import.meta.env.VITE_BACKEND_URI;
 
   const navigate = useNavigate();
+
+  const [quantities, setQuantities] = useState({});
+  const { addToCart } = useContext(CartItemContext);
+
+  const handleAddClick = (productId) => {
+    const newQuantities = { ...quantities, [productId]: 1 };
+    setQuantities(newQuantities);
+    addToCart(productId, 1);
+  };
+
+  const handleIncrement = (productId) => {
+    const newQty = (quantities[productId] || 0) + 1;
+    setQuantities({ ...quantities, [productId]: newQty });
+    addToCart(productId, newQty);
+  };
+
+  const handleDecrement = (productId) => {
+    const newQty = Math.max((quantities[productId] || 1) - 1, 0);
+    setQuantities({ ...quantities, [productId]: newQty });
+    addToCart(productId, newQty);
+  };
 
   const fetchProductDetails = async () => {
     try {
@@ -137,9 +159,10 @@ const ProductListing = () => {
           </div>
 
           {/* Product Details */}
-          <div>
-            <h2 className="text-2xl font-semibold mb-2">{product.name}</h2>
-            <div className="flex items-center gap-4 mb-3">
+          <div className="px-2">
+            <h2 className="text-2xl font-semibold mb-3">{product.name}</h2>
+
+            <div className="flex items-center gap-4 mb-4 flex-wrap">
               <p className="text-2xl text-green-600 font-bold">
                 ₹{product.offerPrice}
               </p>
@@ -157,11 +180,51 @@ const ProductListing = () => {
             </ul>
 
             {/* Action Buttons */}
-            <div className="mt-6 flex gap-4">
-              <button className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
-                Add to Cart
-              </button>
-              <button className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition">
+            <div className="mt-6 flex flex-wrap items-center gap-4">
+              <div className="text-green-500">
+                {!quantities[product._id] || quantities[product._id] === 0 ? (
+                  <button
+                    className="flex items-center justify-center gap-1 bg-green-100 border border-green-300 md:w-[80px] w-[70px] h-[36px] rounded text-green-600 font-medium hover:shadow-sm transition"
+                    onClick={() => handleAddClick(product._id)}
+                  >
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="text-green-400"
+                    >
+                      <path
+                        d="M.583.583h2.333l1.564 7.81a1.17 1.17 0 0 0 1.166.94h5.67a1.17 1.17 0 0 0 1.167-.94l.933-4.893H3.5m2.333 8.75a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0m6.417 0a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0"
+                        stroke="#16a34a"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    Add
+                  </button>
+                ) : (
+                  <div className="flex items-center justify-center gap-2 md:w-20 w-16 h-[36px] bg-green-500/20 border border-green-400 rounded select-none shadow-sm">
+                    <button
+                      onClick={() => handleDecrement(product._id)}
+                      className="text-lg px-2 h-full font-semibold hover:text-green-700"
+                    >
+                      -
+                    </button>
+                    <span className="w-5 text-center text-base font-medium">
+                      {quantities[product._id]}
+                    </span>
+                    <button
+                      onClick={() => handleIncrement(product._id)}
+                      className="text-lg px-2 h-full font-semibold hover:text-green-700"
+                    >
+                      +
+                    </button>
+                  </div>
+                )}
+              </div>
+              <button className="bg-green-600 text-white px-6 py-2 rounded font-medium hover:bg-green-700 transition">
                 Buy Now
               </button>
             </div>

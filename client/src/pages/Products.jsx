@@ -2,12 +2,32 @@ import React, { useContext, useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { ProductContext } from "../context/ProductContext";
 import { useNavigate } from "react-router-dom";
+import { CartItemContext } from "../context/CartItemContext.jsx";
 
 const Products = () => {
   const { products, setProducts, allProducts } = useContext(ProductContext);
-  const [count, setCount] = useState(0);
+  const [quantities, setQuantities] = useState({});
+  const { addToCart } = useContext(CartItemContext);
 
   const navigate = useNavigate();
+
+  const handleAddClick = (productId) => {
+    const newQuantities = { ...quantities, [productId]: 1 };
+    setQuantities(newQuantities);
+    addToCart(productId, 1);
+  };
+
+  const handleIncrement = (productId) => {
+    const newQty = (quantities[productId] || 0) + 1;
+    setQuantities({ ...quantities, [productId]: newQty });
+    addToCart(productId, newQty);
+  };
+
+  const handleDecrement = (productId) => {
+    const newQty = Math.max((quantities[productId] || 1) - 1, 0);
+    setQuantities({ ...quantities, [productId]: newQty });
+    addToCart(productId, newQty);
+  };
 
   useEffect(() => {
     setProducts(allProducts);
@@ -65,10 +85,10 @@ const Products = () => {
               </div>
 
               <div className="text-green-500">
-                {count === 0 ? (
+                {!quantities[product._id] || quantities[product._id] === 0 ? (
                   <button
                     className="flex items-center justify-center gap-1 bg-green-100 border border-green-300 md:w-[80px] w-[64px] h-[34px] rounded text-green-600 font-medium"
-                    onClick={() => setCount(1)}
+                    onClick={() => handleAddClick(product._id)}
                   >
                     <svg
                       width="14"
@@ -81,8 +101,8 @@ const Products = () => {
                       <path
                         d="M.583.583h2.333l1.564 7.81a1.17 1.17 0 0 0 1.166.94h5.67a1.17 1.17 0 0 0 1.167-.94l.933-4.893H3.5m2.333 8.75a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0m6.417 0a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0"
                         stroke="#16a34a"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
                     Add
@@ -90,14 +110,16 @@ const Products = () => {
                 ) : (
                   <div className="flex items-center justify-center gap-2 md:w-20 w-16 h-[34px] bg-green-500/25 rounded select-none">
                     <button
-                      onClick={() => setCount((prev) => Math.max(prev - 1, 0))}
+                      onClick={() => handleDecrement(product._id)}
                       className="cursor-pointer text-md px-2 h-full"
                     >
                       -
                     </button>
-                    <span className="w-5 text-center">{count}</span>
+                    <span className="w-5 text-center">
+                      {quantities[product._id]}
+                    </span>
                     <button
-                      onClick={() => setCount((prev) => prev + 1)}
+                      onClick={() => handleIncrement(product._id)}
                       className="cursor-pointer text-md px-2 h-full"
                     >
                       +

@@ -2,21 +2,26 @@ import { Link } from "react-router-dom";
 
 export default function NotFound() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-green-50 px-6 py-12">
-      <div className="text-center max-w-md">
-        <h1 className="text-7xl font-bold text-green-600">404</h1>
-        <h2 className="text-2xl font-semibold text-gray-800 mt-4">
-          Page Not Found
-        </h2>
-        <p className="text-gray-600 mt-2">
-          Oops! The page you're looking for doesn't exist or has been moved.
-        </p>
-
+    <div className="flex flex-col items-center justify-center text-sm max-md:px-4">
+      <h1 className="text-8xl md:text-9xl font-bold text-indigo-500">404</h1>
+      <div className="h-1 w-16 rounded bg-indigo-500 my-5 md:my-7"></div>
+      <p className="text-2xl md:text-3xl font-bold text-gray-800">Page Not Found</p>
+      <p className="text-sm md:text-base mt-4 text-gray-500 max-w-md text-center">
+        The page you are looking for might have been removed, had its name
+        changed, or is temporarily unavailable.
+      </p>
+      <div className="flex items-center gap-4 mt-6">
         <Link
-          to="/"
-          className="inline-block mt-6 px-6 py-3 bg-green-600 text-white rounded-full shadow-md hover:bg-green-700 transition duration-300"
+          to={"/"}
+          className="bg-gray-800 hover:bg-black px-7 py-2.5 text-white rounded-md active:scale-95 transition-all"
         >
-          Go Back Home
+          Return Home
+        </Link>
+        <Link
+          to="/contact"
+          className="border border-gray-300 px-7 py-2.5 text-gray-800 rounded-md active:scale-95 transition-all"
+        >
+          Contact support
         </Link>
       </div>
     </div>

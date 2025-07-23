@@ -13,9 +13,8 @@ import { UserContext } from "../context/UserContext.jsx";
 import { toast } from "react-hot-toast";
 
 const Signup = () => {
-
   const { setIsLoggedIn } = useContext(UserContext);
-  const { setLoading } = useLoader(); 
+  const { setLoading } = useLoader();
 
   const URI = import.meta.env.VITE_BACKEND_URI;
 
@@ -28,7 +27,6 @@ const Signup = () => {
 
   const signupUserAccount = async (ev) => {
     ev.preventDefault();
-
 
     try {
       setLoading(true); // show loader
@@ -57,17 +55,19 @@ const Signup = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-80px)] flex items-center bg-gradient-to-r from-blue-50 via-white to-blue-100 justify-center bg-gray-50 px-6 py-12">
-      <div className="max-w-md w-full bg-white shadow-xl rounded-xl p-8">
-        <div className="flex flex-col items-center mb-6">
-          <LockClosedIcon className="w-12 h-12 text-indigo-600" />
-          <h2 className="mt-4 text-2xl font-bold text-gray-800">
-            Create an Account
+    <div className="h-[calc(100vh-80px)] flex items-center bg-gradient-to-r from-green-50 via-white to-green-100 justify-center px-6 py-12">
+      <div className="max-w-md w-full bg-white shadow-xl rounded-2xl p-8">
+        <div className="flex flex-col items-center text-center mb-6">
+          <h2 className="mt-3 text-3xl font-bold text-gray-800">
+            Create your account
           </h2>
+          <p className="text-sm text-gray-500 mt-2">
+            Sign up to access personalized features and manage your orders.
+          </p>
         </div>
 
-        <form onSubmit={signupUserAccount} className="space-y-6">
-          {/* Name  */}
+        <form onSubmit={signupUserAccount} className="space-y-5">
+          {/* Full Name */}
           <div>
             <label
               htmlFor="name"
@@ -79,33 +79,29 @@ const Signup = () => {
               type="text"
               id="name"
               value={name}
-              onChange={(ev) => {
-                setName(ev.target.value);
-              }}
+              onChange={(e) => setName(e.target.value)}
               required
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
-              placeholder="Enter full Name"
+              placeholder="Enter your full name"
+              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-green-400 focus:outline-none"
             />
           </div>
 
-          {/* Email  */}
+          {/* Email */}
           <div>
             <label
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
             >
-              Email address
+              Email Address
             </label>
             <input
               type="email"
               id="email"
               value={email}
-              onChange={(ev) => {
-                setEmail(ev.target.value);
-              }}
+              onChange={(e) => setEmail(e.target.value)}
               required
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
               placeholder="you@example.com"
+              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-green-400 focus:outline-none"
             />
           </div>
 
@@ -120,34 +116,33 @@ const Signup = () => {
             <div className="relative mt-1">
               <input
                 id="password"
-                value={password}
-                onChange={(ev) => {
-                  setPassword(ev.target.value);
-                }}
                 type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
-                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                 placeholder="••••••••"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-green-400 focus:outline-none"
               />
               <div
-                className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-500 hover:text-gray-700"
                 onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700 cursor-pointer"
               >
                 {showPassword ? (
-                  <EyeSlashIcon className="w-5 h-5" />
+                  <EyeSlashIcon className="h-5 w-5" />
                 ) : (
-                  <EyeIcon className="w-5 h-5" />
+                  <EyeIcon className="h-5 w-5" />
                 )}
               </div>
             </div>
           </div>
 
+          {/* Submit Button */}
           <div>
             <button
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 transition"
+              className="w-full py-2 px-4 rounded-full font-semibold text-white bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 transition"
             >
-              Sign In
+              Sign Up
             </button>
           </div>
         </form>
@@ -155,8 +150,8 @@ const Signup = () => {
         <div className="mt-6 text-center text-sm text-gray-600">
           Already have an account?{" "}
           <span
-            className="text-indigo-500 hover:underline cursor-pointer"
             onClick={() => navigate("/login")}
+            className="text-green-600 font-medium cursor-pointer hover:underline"
           >
             Login here
           </span>

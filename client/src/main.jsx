@@ -4,6 +4,7 @@ import { ProductContextProvider } from "./context/ProductContext.jsx";
 import { OrderContextProvider } from "./context/OrderContext.jsx";
 import { MessageContextProvider } from "./context/MessageContext.jsx";
 import { AdminContextProvider } from "./context/AdminContext.jsx";
+import { CartItemContextProvider } from "./context/CartItemContext.jsx";
 import { Toaster } from "react-hot-toast";
 import { createRoot } from "react-dom/client";
 import "./index.css";
@@ -18,13 +19,16 @@ createRoot(document.getElementById("root")).render(
           <OrderContextProvider>
             <MessageContextProvider>
               <AdminContextProvider>
-                <App />
+                <CartItemContextProvider>
+                  <App />
+                </CartItemContextProvider>
               </AdminContextProvider>
             </MessageContextProvider>
           </OrderContextProvider>
         </ProductContextProvider>
       </UserContextProvider>
     </LoaderContextProvider>
+
     <Toaster />
   </BrowserRouter>
 );

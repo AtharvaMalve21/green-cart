@@ -17,7 +17,6 @@ export const ProductContextProvider = ({ children }) => {
     try {
       setLoading(true);
       const { data } = await axios.get(URI + "/api/product");
-      console.log(data);
 
       if (data.success) {
         setAllProducts(data.data);

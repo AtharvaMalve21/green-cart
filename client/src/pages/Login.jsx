@@ -57,13 +57,13 @@ const Login = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-80px)] flex items-center bg-gradient-to-r from-blue-50 via-white to-blue-100 justify-center bg-gray-50 px-6 py-12">
+    <div className="h-[calc(100vh-80px)] flex items-center bg-gradient-to-r from-green-50 via-white to-green-100 justify-center bg-gray-50 px-6 py-12">
       <div className="max-w-md w-full bg-white shadow-xl rounded-xl p-8">
         <div className="flex flex-col items-center mb-6">
-          <LockClosedIcon className="w-12 h-12 text-indigo-600" />
-          <h2 className="mt-4 text-2xl font-bold text-gray-800">
-            Sign in to your account
-          </h2>
+          <h2 className="text-2xl font-bold text-gray-800">Welcome Back!</h2>
+          <p className="mt-2 text-sm text-gray-500 text-center">
+            Please enter your credentials to access your account.
+          </p>
         </div>
 
         <form onSubmit={loginUserAccount} className="space-y-6">
@@ -122,7 +122,7 @@ const Login = () => {
           <div>
             <button
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 transition"
+              className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-full text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition"
             >
               Sign In
             </button>
