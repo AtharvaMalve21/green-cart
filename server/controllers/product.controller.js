@@ -4,7 +4,6 @@ import fs from "fs";
 
 export const addProduct = async (req, res) => {
   try {
-    
     // fetch the product details
     const { name, category, description, price, offerPrice } = req.body;
 
@@ -66,7 +65,6 @@ export const addProduct = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
   try {
-
     const products = await Product.find({});
 
     return res.status(200).json({
@@ -135,7 +133,6 @@ export const viewProduct = async (req, res) => {
 
 export const changeStock = async (req, res) => {
   try {
-    
     const { id: productId } = req.params;
     const product = await Product.findById(productId);
     if (!product) {
@@ -152,6 +149,27 @@ export const changeStock = async (req, res) => {
       success: true,
       data: product,
       message: "Product stock changed successfully.",
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+export const searchProduct = async (req,res) => {
+  try {
+    const { name: productName } = req.query;
+
+    const products = await Product.find({
+      name: { $regex: productName, $options: "i" }, 
+    }).limit(10);
+
+    return res.status(200).json({
+      success: true,
+      data: products,
+      message: "Products data fetched.",
     });
   } catch (err) {
     res.status(500).json({

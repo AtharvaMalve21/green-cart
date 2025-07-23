@@ -32,6 +32,9 @@ const Categories = () => {
           .filter((category) => groupedProducts[category.path])
           .map((category, index) => (
             <div
+              onClick={() =>
+                navigate(`/products/${category.path.toLowerCase()}`)
+              }
               key={index}
               className="cursor-pointer group rounded-2xl bg-white shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-200 overflow-hidden"
             >
@@ -40,9 +43,6 @@ const Categories = () => {
                 style={{ backgroundColor: category.bgColor }}
               >
                 <img
-                  onClick={() =>
-                    navigate(`/products/${category.path.toLowerCase()}`)
-                  }
                   src={category.image}
                   alt={category.text}
                   className="w-20 h-20 sm:w-24 sm:h-24 object-contain transition-transform duration-300 group-hover:scale-105"

@@ -4,6 +4,7 @@ import {
   getAllProducts,
   viewProduct,
   filterProductByCategory,
+  searchProduct,
   changeStock,
 } from "../controllers/product.controller.js";
 import { isAdmin } from "../middleware/auth.middleware.js";
@@ -16,6 +17,8 @@ router.post("/add", isAdmin, upload.array("images", 10), addProduct);
 router.get("/", getAllProducts);
 
 router.get("/filter", filterProductByCategory);
+
+router.get("/search", searchProduct);
 
 router.get("/:id", viewProduct);
 
