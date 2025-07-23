@@ -12,19 +12,19 @@ import { LoaderContextProvider } from "./context/LoaderContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <UserContextProvider>
-      <ProductContextProvider>
-        <OrderContextProvider>
-          <MessageContextProvider>
-            <AdminContextProvider>
-              <LoaderContextProvider>
+    <LoaderContextProvider>
+      <UserContextProvider>
+        <ProductContextProvider>
+          <OrderContextProvider>
+            <MessageContextProvider>
+              <AdminContextProvider>
                 <App />
-              </LoaderContextProvider>
-            </AdminContextProvider>
-          </MessageContextProvider>
-        </OrderContextProvider>
-      </ProductContextProvider>
-    </UserContextProvider>
+              </AdminContextProvider>
+            </MessageContextProvider>
+          </OrderContextProvider>
+        </ProductContextProvider>
+      </UserContextProvider>
+    </LoaderContextProvider>
     <Toaster />
   </BrowserRouter>
 );

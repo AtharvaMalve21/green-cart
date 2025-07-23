@@ -4,6 +4,7 @@ import { StarIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import RelatedProducts from "../components/RelatedProducts";
 
 const ProductListing = () => {
   const [product, setProduct] = useState(null);
@@ -55,10 +56,54 @@ const ProductListing = () => {
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Breadcrumb */}
       {product && (
-        <h1 className="text-sm text-gray-500 mb-4">
-          Home / Products / {product.category} /{" "}
-          <span className="font-medium text-gray-700">{product.name}</span>
-        </h1>
+        <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600 font-medium py-2">
+          <button
+            onClick={() => navigate("/")}
+            type="button"
+            aria-label="Home"
+            className="hover:text-blue-600 transition-colors"
+          >
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="mb-1"
+            >
+              <path
+                d="M16 7.609c.352 0 .69.122.96.343l.111.1 6.25 6.25v.001a1.5 1.5 0 0 1 .445 1.071v7.5a.89.89 0 0 1-.891.891H9.125a.89.89 0 0 1-.89-.89v-7.5l.006-.149a1.5 1.5 0 0 1 .337-.813l.1-.11 6.25-6.25c.285-.285.67-.444 1.072-.444Zm5.984 7.876L16 9.5l-5.984 5.985v6.499h11.968z"
+                fill="#475569"
+                stroke="#475569"
+                stroke-width=".094"
+              />
+            </svg>
+          </button>
+
+          <span className="text-gray-400">/</span>
+
+          <span
+            onClick={() => navigate("/products")}
+            className="hover:text-blue-600 transition-colors cursor-pointer"
+          >
+            Products
+          </span>
+
+          <span className="text-gray-400">/</span>
+
+          <span
+            onClick={() => navigate(`/products/${product.category}`)}
+            className="hover:text-blue-600 transition-colors cursor-pointer capitalize"
+          >
+            {product.category}
+          </span>
+
+          <span className="text-gray-400">/</span>
+
+          <span className="text-gray-700 font-semibold capitalize">
+            {product.name}
+          </span>
+        </div>
       )}
 
       {/* Product Info */}
@@ -125,93 +170,10 @@ const ProductListing = () => {
       )}
 
       {/* Related Products */}
-      <div className="mt-16">
-        <h1 className="text-xl font-semibold mb-6">Related Products</h1>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {filteredProductsByCategory.map((product) => (
-            <div
-              onClick={() => {
-                navigate(
-                  `/products/${product.category.toLowerCase()}/${product._id}`
-                );
-              }}
-              key={product._id}
-              className="bg-white cursor-pointer rounded-xl shadow hover:shadow-lg transition-transform transform hover:-translate-y-1 duration-300 p-3 flex flex-col"
-            >
-              {/* Product Image with bg-green-50 */}
-              <div className="bg-green-50 rounded-md mb-4">
-                <img
-                  src={product.images[0]}
-                  alt={product.name}
-                  className="w-full h-44 object-cover rounded-md transition-transform duration-300 hover:scale-105"
-                />
-              </div>
-
-              {/* Category + Name */}
-              <div className="flex flex-col gap-1 mb-2">
-                <p className="text-xs text-gray-400">{product.category}</p>
-                <h2 className="text-sm font-semibold text-gray-800 line-clamp-2">
-                  {product.name}
-                </h2>
-              </div>
-
-              {/* Star Ratings */}
-              <div className="flex items-center gap-1 mb-2">
-                {[...Array(4)].map((_, index) => (
-                  <StarIcon key={index} className="w-4 h-4 text-yellow-400" />
-                ))}
-                <span className="text-xs text-gray-500">(5)</span>
-              </div>
-
-              {/* Price + Add Button Row */}
-              <div className="flex items-center justify-between mt-auto">
-                <div className="flex items-center gap-2">
-                  <span className="text-green-600 font-semibold text-lg">
-                    ₹{product.offerPrice}
-                  </span>
-                  <span className="text-gray-400 line-through text-md">
-                    ₹{product.price}
-                  </span>
-                </div>
-
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    addItemsToCart(product);
-                  }}
-                  className="flex items-center gap-1 bg-green-500 text-white px-3 py-1.5 rounded hover:bg-green-600 transition-all duration-300 text-sm hover:scale-105"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-4 h-4"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-                    />
-                  </svg>
-                  Add
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* See More Link */}
-        <div className="mt-8 text-center">
-          <Link
-            to="/products"
-            className="inline-block px-5 py-2 border border-blue-600 text-blue-600 rounded-full font-semibold transition-all duration-300 hover:bg-blue-600 hover:text-white hover:shadow-md"
-          >
-            See More
-          </Link>
-        </div>
-      </div>
+      <RelatedProducts
+        filteredProductsByCategory={filteredProductsByCategory}
+        id={id}
+      />
     </div>
   );
 };

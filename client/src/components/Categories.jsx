@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { categories } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { ProductContext } from "../context/ProductContext";
 
 const Categories = () => {
   const navigate = useNavigate();
-  const { products } = useContext(ProductContext);
+  const { products, setProducts, allProducts } = useContext(ProductContext);
 
   // Create a map of category name => list of products
   const groupedProducts = products.reduce((acc, product) => {
@@ -16,6 +16,10 @@ const Categories = () => {
     acc[category].push(product);
     return acc;
   }, {});
+
+  useEffect(() => {
+    setProducts(allProducts); // show everything when this page loads
+  }, [allProducts]);
 
   return (
     <section className="py-14 px-4 sm:px-8 lg:px-16">
@@ -29,9 +33,6 @@ const Categories = () => {
           .map((category, index) => (
             <div
               key={index}
-              onClick={() =>
-                navigate(`/products/${category.path.toLowerCase()}`)
-              }
               className="cursor-pointer group rounded-2xl bg-white shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-200 overflow-hidden"
             >
               <div
@@ -39,6 +40,9 @@ const Categories = () => {
                 style={{ backgroundColor: category.bgColor }}
               >
                 <img
+                  onClick={() =>
+                    navigate(`/products/${category.path.toLowerCase()}`)
+                  }
                   src={category.image}
                   alt={category.text}
                   className="w-20 h-20 sm:w-24 sm:h-24 object-contain transition-transform duration-300 group-hover:scale-105"

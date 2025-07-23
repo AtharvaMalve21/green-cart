@@ -8,8 +8,13 @@ const GlobalLoader = () => {
   if (!loading) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center">
-      <div className="h-12 w-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm">
+      <div className="flex flex-col items-center space-y-4">
+        <div className="h-14 w-14 border-4 border-t-transparent border-blue-500 rounded-full animate-spin" />
+        <p className="text-white text-sm font-medium tracking-wide animate-pulse">
+          Loading, please wait...
+        </p>
+      </div>
     </div>
   );
 };

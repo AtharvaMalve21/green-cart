@@ -103,7 +103,7 @@ const Navbar = () => {
             {/* User Profile Dropdown */}
             {user ? (
               <div className="relative group">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center text-white font-semibold text-lg cursor-pointer">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-green-400 to-green-600 flex items-center justify-center text-white font-semibold text-lg cursor-pointer">
                   {user?.name?.charAt(0).toUpperCase() ||
                     user?.email?.charAt(0).toUpperCase()}
                 </div>
