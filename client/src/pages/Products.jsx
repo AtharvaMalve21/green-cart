@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const Products = () => {
   const { products, setProducts, allProducts } = useContext(ProductContext);
-  const [count,setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   const navigate = useNavigate();
 
@@ -56,7 +56,7 @@ const Products = () => {
             {/* Price + Add Button */}
             <div className="flex items-center justify-between mt-auto">
               <div className="flex items-center gap-2">
-                <span className="text-green-600 font-semibold text-lg">
+                <span className="text-green-600 font-semibold text-xl">
                   ₹{product.offerPrice}
                 </span>
                 <span className="text-gray-400 line-through text-sm">
@@ -64,10 +64,10 @@ const Products = () => {
                 </span>
               </div>
 
-              <div className="text-indigo-500">
+              <div className="text-green-500">
                 {count === 0 ? (
                   <button
-                    className="flex items-center justify-center gap-1 bg-indigo-100 border border-indigo-300 md:w-[80px] w-[64px] h-[34px] rounded text-indigo-600 font-medium"
+                    className="flex items-center justify-center gap-1 bg-green-100 border border-green-300 md:w-[80px] w-[64px] h-[34px] rounded text-green-600 font-medium"
                     onClick={() => setCount(1)}
                   >
                     <svg
@@ -76,10 +76,11 @@ const Products = () => {
                       viewBox="0 0 14 14"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
+                      className="text-green-400"
                     >
                       <path
                         d="M.583.583h2.333l1.564 7.81a1.17 1.17 0 0 0 1.166.94h5.67a1.17 1.17 0 0 0 1.167-.94l.933-4.893H3.5m2.333 8.75a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0m6.417 0a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0"
-                        stroke="#615fff"
+                        stroke="#16a34a"
                         stroke-linecap="round"
                         stroke-linejoin="round"
                       />
@@ -87,7 +88,7 @@ const Products = () => {
                     Add
                   </button>
                 ) : (
-                  <div className="flex items-center justify-center gap-2 md:w-20 w-16 h-[34px] bg-indigo-500/25 rounded select-none">
+                  <div className="flex items-center justify-center gap-2 md:w-20 w-16 h-[34px] bg-green-500/25 rounded select-none">
                     <button
                       onClick={() => setCount((prev) => Math.max(prev - 1, 0))}
                       className="cursor-pointer text-md px-2 h-full"
