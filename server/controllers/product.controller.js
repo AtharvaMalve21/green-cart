@@ -1,6 +1,7 @@
 import Product from "../models/product.model.js";
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
+import transporter from "../config/nodemailer.config.js";
 
 export const addProduct = async (req, res) => {
   try {
@@ -89,7 +90,6 @@ export const filterProductByCategory = async (req, res) => {
         message: "Category parameter is required.",
       });
     }
-
     const filteredProducts = await Product.find({
       category: { $regex: new RegExp(category, "i") },
     });
@@ -158,12 +158,12 @@ export const changeStock = async (req, res) => {
   }
 };
 
-export const searchProduct = async (req,res) => {
+export const searchProduct = async (req, res) => {
   try {
     const { name: productName } = req.query;
 
     const products = await Product.find({
-      name: { $regex: productName, $options: "i" }, 
+      name: { $regex: productName, $options: "i" },
     }).limit(10);
 
     return res.status(200).json({
@@ -175,6 +175,34 @@ export const searchProduct = async (req,res) => {
     res.status(500).json({
       success: false,
       message: err.message,
+    });
+  }
+};
+
+export const getProductsByIds = async (req, res) => {
+  try {
+    const { productIds } = req.body;
+
+    if (!productIds || !Array.isArray(productIds)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid product IDs",
+      });
+    }
+
+    const products = await Product.find({
+      _id: { $in: productIds },
+    });
+
+    return res.status(200).json({
+      success: true,
+      data: products,
+    });
+  } catch (err) {
+    console.error("Error fetching products by IDs:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch product details",
     });
   }
 };

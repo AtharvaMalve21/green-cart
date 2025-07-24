@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import { assets } from "../../assets/assets";
-import { Link } from "react-router-dom";
 import { AdminContext } from "../../context/AdminContext.jsx";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { assets } from "../../assets/assets.js";
+import { Link } from "react-router-dom";
 
-const AdminNavbar = () => {
-  const { admin, setAdmin, setIsAdminLoggedIn } = useContext(AdminContext);
+const AdminNav = () => {
+  const { setAdmin, setIsAdminLoggedIn } = useContext(AdminContext);
   const URI = import.meta.env.VITE_BACKEND_URI;
 
   const logoutAdmin = async () => {
@@ -21,42 +21,30 @@ const AdminNavbar = () => {
         toast.success(data.message);
       }
     } catch (err) {
-      toast.error(err.response.data.message);
+      toast.error(err?.response?.data?.message || "Logout failed");
     }
   };
 
+
   return (
-    <nav className="bg-white shadow-md py-4 px-6 flex items-center justify-between">
-      {/* Logo + Admin Panel Badge */}
-      <div className="flex items-center space-x-4">
-        <Link to="/" className="flex items-center space-x-2">
-          <img src={assets.logo} alt="Logo" className="h-9 w-auto" />
+    <>
+      {/* Top Navbar */}
+      <div className="flex items-center justify-between px-4 md:px-8 border-b border-gray-300 py-3 bg-white transition-all duration-300">
+        <Link to={"/admin"}>
+          <img className="h-9" src={assets.logo} alt="dummyLogoColored" />
         </Link>
-        <span className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-1.5 rounded-full text-sm font-semibold shadow hover:shadow-md transition">
-          Admin Panel
-        </span>
-      </div>
-
-      {/* Welcome Message + Admin Name + Logout */}
-      <div className="flex items-center gap-6">
-        <div className="flex flex-col items-end text-right">
-          <p className="text-sm sm:text-base font-semibold text-indigo-700">
-            👋 Welcome Admin
-          </p>
-          <p className="text-xs sm:text-sm text-gray-600 mt-0.5 font-medium">
-            {admin}
-          </p>
+        <div className="flex items-center gap-5 text-gray-500">
+          <p>Hi! Admin</p>
+          <button
+            onClick={logoutAdmin}
+            className="border border-green-400 hover:border-green-600 bg-green-50 text-green-700 hover:text-white hover:bg-green-500 rounded-full text-sm px-4 py-1 transition-all duration-300"
+          >
+            Logout
+          </button>
         </div>
-
-        <button
-          onClick={logoutAdmin}
-          className="bg-gradient-to-r from-blue-600 to-indigo-500 text-white text-sm px-5 py-2 rounded-full hover:from-blue-700 hover:to-indigo-600 shadow-md hover:shadow-lg transition-all duration-300"
-        >
-          Logout
-        </button>
       </div>
-    </nav>
+    </>
   );
 };
 
-export default AdminNavbar;
+export default AdminNav;

@@ -3,6 +3,7 @@ import {
   adminLogin,
   adminLogout,
   getAdminProfile,
+  findAllProducts,
 } from "../controllers/admin.controller.js";
 
 import { isAdmin } from "../middleware/auth.middleware.js";
@@ -17,5 +18,8 @@ router.get("/logout", isAdmin, adminLogout);
 
 //Admin-Profile
 router.get("/profile", isAdmin, getAdminProfile);
+
+//Admin-Find All the Listed Products
+router.get("/products", isAdmin, findAllProducts);
 
 export default router;

@@ -159,7 +159,7 @@ const Navbar = () => {
             />
             <span className="absolute -top-2 -right-3 bg-green-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
               {cartItems
-                ? cartItems.reduce((total, item) => total + item.quantity, 0)
+                ? cartItems.reduce((acc, item) => acc + item.quantity, 0)
                 : 0}
             </span>
           </div>
@@ -179,7 +179,7 @@ const Navbar = () => {
                   My Profile
                 </Link>
                 <Link
-                  to="/orders"
+                  to="/my-orders"
                   className="block px-4 py-2 text-sm text-indigo-700 hover:bg-gray-100"
                 >
                   My Orders

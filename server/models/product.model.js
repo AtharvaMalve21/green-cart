@@ -9,6 +9,15 @@ const productSchema = new Schema(
     },
     category: {
       type: String,
+      enum: [
+        "Vegetables",
+        "Fruits",
+        "Drinks",
+        "Instant",
+        "Dairy",
+        "Bakery",
+        "Grains",
+      ],
       required: true,
     },
     description: [

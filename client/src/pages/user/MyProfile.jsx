@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { UserContext } from "../context/UserContext.jsx";
+import { UserContext } from "../../context/UserContext.jsx";
 import { EnvelopeIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 
 const MyProfile = () => {

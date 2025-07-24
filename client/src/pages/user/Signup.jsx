@@ -5,11 +5,11 @@ import {
   EyeIcon,
   EyeSlashIcon,
 } from "@heroicons/react/24/solid";
-import { useLoader } from "../context/LoaderContext";
+import { useLoader } from "../../context/LoaderContext.jsx";
 
 import axios from "axios";
 
-import { UserContext } from "../context/UserContext.jsx";
+import { UserContext } from "../../context/UserContext.jsx";
 import { toast } from "react-hot-toast";
 
 const Signup = () => {

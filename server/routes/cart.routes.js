@@ -6,14 +6,15 @@ import {
   removeItemsFromCart,
   clearCart,
   updateCartItemQuantity,
+  syncProductDetailsWithLoggedInUser,
 } from "../controllers/cart.controller.js";
 import { isAuthenticated } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-// Authenticated users only
 router.get("/", isAuthenticated, getCartItems);
 router.get("/view", isAuthenticated, viewCart);
+router.post("/sync", isAuthenticated, syncProductDetailsWithLoggedInUser);
 router.delete("/:id", isAuthenticated, removeItemsFromCart);
 router.put("/", isAuthenticated, updateCartItemQuantity);
 router.delete("/clear", isAuthenticated, clearCart);

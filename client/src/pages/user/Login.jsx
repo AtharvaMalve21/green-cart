@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLoader } from "../context/LoaderContext.jsx";
+import { useLoader } from "../../context/LoaderContext.jsx";
 import {
   LockClosedIcon,
   EyeIcon,
@@ -9,7 +9,7 @@ import {
 
 import axios from "axios";
 
-import { UserContext } from "../context/UserContext.jsx";
+import { UserContext } from "../../context/UserContext.jsx";
 import { toast } from "react-hot-toast";
 
 const Login = () => {
@@ -46,10 +46,32 @@ const Login = () => {
 
       if (data.success) {
         setIsLoggedIn(true);
+
+        const guestCart = JSON.parse(localStorage.getItem("guest_cart")) || [];
+
+        if (guestCart.length > 0) {
+          await axios.post(
+            `${URI}/api/cart/sync`,
+            {
+              cartItems: guestCart,
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+              withCredentials: true,
+            }
+          );
+
+          localStorage.removeItem("guest_cart");
+        }
+
         toast.success(data.message);
+
         navigate("/");
       }
     } catch (err) {
+      console.log(err.message);
       toast.error(err.response?.data.message || "Login failed");
     } finally {
       setLoading(false); // stop loader

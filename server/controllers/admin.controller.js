@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
+import Product from "../models/product.model.js";
 
 export const adminLogin = async (req, res) => {
   try {
-
     //fetch the admin details
     const { email, password } = req.body;
 
@@ -58,7 +58,6 @@ export const adminLogin = async (req, res) => {
 
 export const adminLogout = async (req, res) => {
   try {
-    
     const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -97,6 +96,23 @@ export const getAdminProfile = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+export const findAllProducts = async (req, res) => {
+  try {
+    const products = await Product.find({});
+
+    return res.status(200).json({
+      success: true,
+      data: products,
+      message: "Products data fetched.",
+    });
+  } catch (err) {
+    return res.status(500).json({
       success: false,
       message: err.message,
     });

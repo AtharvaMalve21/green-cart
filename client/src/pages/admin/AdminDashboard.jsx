@@ -1,11 +1,12 @@
-import React from 'react'
+import React from "react";
+import AddProduct from "./AddProduct";
 
 const AdminDashboard = () => {
   return (
-    <div>
-      Admin Dashboard
-    </div>
-  )
-}
+    <>
+      <AddProduct />
+    </>
+  );
+};
 
-export default AdminDashboard
+export default AdminDashboard;

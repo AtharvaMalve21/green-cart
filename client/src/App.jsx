@@ -2,12 +2,11 @@ import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout.jsx";
 import Home from "./pages/Home.jsx";
-import Login from "./pages/Login.jsx";
-import Signup from "./pages/Signup.jsx";
-import MyProfile from "./pages/MyProfile.jsx";
+import Login from "./pages/user/Login.jsx";
+import Signup from "./pages/user/Signup.jsx";
+import MyProfile from "./pages/user/MyProfile.jsx";
 import Products from "./pages/Products.jsx";
 import Cart from "./pages/Cart.jsx";
-import MyOrders from "./pages/MyOrders.jsx";
 import Contact from "./pages/Contact.jsx";
 import ProductCategory from "./pages/ProductCategory.jsx";
 import ProductListing from "./pages/ProductListing.jsx";
@@ -20,9 +19,17 @@ import GlobalLoader from "./components/GlobalLoader.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import Footer from "./components/Footer.jsx";
 import { AdminContext } from "./context/AdminContext.jsx";
+import MyOrders from "./pages/user/MyOrders.jsx";
+import ProductList from "./pages/admin/ProductList.jsx";
+import OrderList from "./pages/admin/OrderList.jsx";
+import { useLocation } from "react-router-dom";
 
 const App = () => {
+  const location = useLocation();
   const { admin } = useContext(AdminContext);
+  const hideFooterRoutes = ["/admin-login"];
+  const shouldShowFooter =
+    !admin && !hideFooterRoutes.includes(location.pathname);
 
   return (
     <>
@@ -46,14 +53,14 @@ const App = () => {
               </ProtectedUserRoute>
             }
           />
-          {/* <Route
-            path="/orders"
+          <Route
+            path="/my-orders"
             element={
               <ProtectedUserRoute>
                 <MyOrders />
               </ProtectedUserRoute>
             }
-          /> */}
+          />
         </Route>
         <Route
           path="/admin"
@@ -64,10 +71,13 @@ const App = () => {
           }
         >
           <Route index element={<AdminDashboard />} />
+          {/* <Route path="add-product" element={<AddProduct />} /> */}
+          <Route path="product-list" element={<ProductList />} />
+          <Route path="order-list" element={<OrderList />} />
         </Route>
         <Route path="/admin-login" element={<AdminLoginPanel />} />
       </Routes>
-      {!admin && <Footer />}
+      {shouldShowFooter && <Footer />}
     </>
   );
 };
