@@ -23,8 +23,8 @@ const Categories = () => {
 
   return (
     <section className="py-14 px-4 sm:px-8 lg:px-16">
-      <h1 className="text-3xl sm:text-4xl font-extrabold text-center text-green-700 mb-10">
-        Shop by Category
+      <h1 className="text-2xl ml-2 sm:text-4xl font-semibold text-gray-700 mb-10">
+        Categories 
       </h1>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
@@ -49,10 +49,10 @@ const Categories = () => {
                 />
               </div>
               <div className="bg-lime-50  py-4 px-3 text-center">
-                <h2 className="text-base font-semibold text-green-800">
+                <h2 className="text-base font-semibold text-gray-600">
                   {category.text}
                 </h2>
-                <p className="text-xs text-gray-400 mt-1">
+                <p className="text-sm text-gray-500 mt-2">
                   {groupedProducts[category.path]?.length} items
                 </p>
               </div>

@@ -3,11 +3,22 @@ import { StarIcon } from "@heroicons/react/24/solid";
 import { ProductContext } from "../context/ProductContext";
 import { useNavigate } from "react-router-dom";
 import { CartItemContext } from "../context/CartItemContext.jsx";
+import { useLocation } from "react-router-dom";
 
 const Products = () => {
   const { products, setProducts, allProducts } = useContext(ProductContext);
   const [quantities, setQuantities] = useState({});
   const { addToCart } = useContext(CartItemContext);
+
+  const location = useLocation();
+  const pathParts = location.pathname.split("/").filter(Boolean);
+  const categoryFromUrl = pathParts.length > 1 ? pathParts[1] : null;
+
+  const heading = categoryFromUrl
+    ? `Fresh ${
+        categoryFromUrl.charAt(0).toUpperCase() + categoryFromUrl.slice(1)
+      }`
+    : "All Products";
 
   const navigate = useNavigate();
 
@@ -35,6 +46,11 @@ const Products = () => {
 
   return (
     <div className="p-4">
+      <div className="flex ml-20 mb-5 flex-col items-end w-max">
+        <p className="text-2xl font-medium uppercase">{heading}</p>
+        <div className="w-16 h-0.5 bg-green-400 rounded-full"></div>
+      </div>
+
       <div className="flex flex-wrap justify-center gap-x-4 gap-y-6">
         {products.map((product) => (
           <div
@@ -42,7 +58,7 @@ const Products = () => {
             className="bg-white cursor-pointer w-[300px] rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02] p-4 flex flex-col group"
           >
             {/* Product Image */}
-            <div className="bg-green-50 rounded-md mb-4 overflow-hidden">
+            <div className="bg-green-100 rounded-md mb-4 overflow-hidden">
               <img
                 onClick={() =>
                   navigate(
@@ -77,17 +93,17 @@ const Products = () => {
             <div className="flex items-center justify-between mt-auto">
               <div className="flex items-center gap-2">
                 <span className="text-green-600 font-semibold text-xl">
-                  ₹{product.offerPrice}
+                  ${product.offerPrice}
                 </span>
                 <span className="text-gray-400 line-through text-sm">
-                  ₹{product.price}
+                  ${product.price}
                 </span>
               </div>
 
               <div className="text-green-500">
                 {!quantities[product._id] || quantities[product._id] === 0 ? (
                   <button
-                    className="flex items-center justify-center gap-1 bg-green-100 border border-green-300 md:w-[80px] w-[64px] h-[34px] rounded text-green-600 font-medium"
+                    className="flex items-center justify-center gap-1 bg-green-100 border border-green-300 md:w-[80px] w-[64px] h-[34px] rounded text-green-600 font-medium hover:bg-green-200"
                     onClick={() => handleAddClick(product._id)}
                   >
                     <svg

@@ -94,7 +94,7 @@ const Cart = () => {
       <div className="flex-1 max-w-4xl">
         <h1 className="text-3xl font-medium mb-6">
           Shopping Cart{" "}
-          <span className="text-sm text-indigo-500">
+          <span className="text-sm text-green-500">
             {cartItems?.length} {cartItems?.length === 1 ? " Item" : "Items"}
           </span>
         </h1>
@@ -126,15 +126,20 @@ const Cart = () => {
                 />
               </div>
               <div>
-                <p className="hidden md:block font-semibold">{product.name}</p>
-                <div className="font-normal text-gray-500/70">
+                <p className="hidden md:block font-semibold text-gray-800">
+                  {product.name}
+                </p>
+                <div className="font-normal text-sm text-gray-500">
                   <p>
-                    Size: <span>{product.size || "N/A"}</span>
+                    Weight:{" "}
+                    <span className="text-gray-700">
+                      {product.size || "N/A"}
+                    </span>
                   </p>
-                  <div className="flex items-center">
+                  <div className="flex items-center gap-2 mt-1">
                     <p>Qty:</p>
                     <select
-                      className="outline-none ml-2 border border-gray-300 rounded px-2 py-1"
+                      className="text-gray-800 text-sm rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                       value={product.quantity}
                       onChange={(e) =>
                         updateQuantity(product._id, parseInt(e.target.value))
@@ -152,7 +157,7 @@ const Cart = () => {
             </div>
 
             <p className="text-center">
-              ₹{product.offerPrice * product.quantity}
+              ${product.offerPrice * product.quantity}
             </p>
             <button
               onClick={() => removeItemFromCart(product._id)}
@@ -164,6 +169,7 @@ const Cart = () => {
                 viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="w-6 h-6"
               >
                 <path
                   d="m12.5 7.5-5 5m0-5 5 5m5.833-2.5a8.333 8.333 0 1 1-16.667 0 8.333 8.333 0 0 1 16.667 0"
@@ -200,7 +206,7 @@ const Cart = () => {
         </Link>
       </div>
 
-      <div className="max-w-[360px] w-full bg-gray-100/40 p-5 max-md:mt-16 border border-gray-300/70">
+      <div className="max-w-[360px] w-full bg-gray-100 p-5 max-md:mt-16 mt-20 shadow-inner h-[490px] overflow-y-auto">
         <h2 className="text-xl md:text-xl font-medium">Order Summary</h2>
         <hr className="border-gray-300 my-5" />
 
@@ -210,7 +216,7 @@ const Cart = () => {
             <p className="text-gray-500">No address found</p>
             <button
               onClick={() => setShowAddress(!showAddress)}
-              className="text-indigo-500 hover:underline cursor-pointer"
+              className="text-green-500 hover:underline cursor-pointer"
             >
               Change
             </button>
@@ -224,7 +230,7 @@ const Cart = () => {
                 </p>
                 <p
                   onClick={() => setShowAddress(false)}
-                  className="text-indigo-500 text-center cursor-pointer p-2 hover:bg-indigo-500/10"
+                  className="text-green-700 text-center cursor-pointer p-2 hover:bg-indigo-500/10"
                 >
                   Add address
                 </p>
@@ -245,7 +251,7 @@ const Cart = () => {
         <div className="text-gray-500 mt-4 space-y-2">
           <p className="flex justify-between">
             <span>Price</span>
-            <span>₹{totalAmount.subtotal}</span>
+            <span>${totalAmount.subtotal}</span>
           </p>
           <p className="flex justify-between">
             <span>Shipping Fee</span>
@@ -253,16 +259,16 @@ const Cart = () => {
           </p>
           <p className="flex justify-between">
             <span>Tax (2%)</span>
-            <span>₹{totalAmount.tax}</span>
+            <span>${totalAmount.tax}</span>
           </p>
           <p className="flex justify-between text-lg font-medium mt-3">
             <span>Total Amount:</span>
-            <span>₹{totalAmount.total}</span>
+            <span>${totalAmount.total}</span>
           </p>
         </div>
         <button
           onClick={placeOrder}
-          className="w-full py-3 mt-6 cursor-pointer bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition"
+          className="w-full py-3 mt-6 cursor-pointer bg-green-500 text-white font-medium hover:bg-green-600 transition"
         >
           {!isOrderPlaced ? "Place Order" : "ORDER PLACED"}
         </button>

@@ -38,7 +38,7 @@ const TopProducts = () => {
             className="bg-white cursor-pointer w-[300px] rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02] p-4 flex flex-col group"
           >
             {/* Product Image */}
-            <div className="bg-green-50 rounded-md mb-4 overflow-hidden">
+            <div className="bg-green-100 rounded-md mb-4 overflow-hidden">
               <img
                 onClick={() =>
                   navigate(
@@ -73,10 +73,10 @@ const TopProducts = () => {
             <div className="flex items-center justify-between mt-auto">
               <div className="flex items-center gap-2">
                 <span className="text-green-600 font-semibold text-lg">
-                  ₹{product.offerPrice}
+                  ${product.offerPrice}
                 </span>
                 <span className="text-gray-400 line-through text-sm">
-                  ₹{product.price}
+                  ${product.price}
                 </span>
               </div>
 
