@@ -94,7 +94,6 @@ export const getCartItems = async (req, res) => {
       });
     }
 
-    
     const productIds = cartItems.map((item) => item.productId);
     const products = await Product.find({ _id: { $in: productIds } });
 
@@ -311,7 +310,7 @@ export const clearCart = async (req, res) => {
 export const syncProductDetailsWithLoggedInUser = async (req, res) => {
   try {
     const userId = req.user._id;
-    const { cartItems } = req.body; // [{ productId, quantity }]
+    const { cartItems } = req.body;
 
     const user = await User.findById(userId);
     if (!user) {
@@ -320,17 +319,14 @@ export const syncProductDetailsWithLoggedInUser = async (req, res) => {
         .json({ success: false, message: "User not found." });
     }
 
-    // Merge logic for cartItems inside User model
     cartItems.forEach((incomingItem) => {
       const index = user.cartItems.findIndex(
         (item) => item.productId.toString() === incomingItem.productId
       );
 
       if (index !== -1) {
-        // Product already exists in cart → update quantity
         user.cartItems[index].quantity += incomingItem.quantity;
       } else {
-        // New product → push to user's cart
         user.cartItems.push(incomingItem);
       }
     });

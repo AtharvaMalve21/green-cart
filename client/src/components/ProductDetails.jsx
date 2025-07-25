@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 
-const ProductDetails = ({ product }) => {
+const ProductDetails = ({ product, handleAddToCart, handleBuyNow }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isNotified, setIsNotified] = useState(false);
 
@@ -69,9 +69,9 @@ const ProductDetails = ({ product }) => {
 
         {/* Price Section */}
         <div className="mt-6">
-          <p className="text-gray-500/70 line-through">MRP: ${product.price}</p>
+          <p className="text-gray-500/70 line-through">MRP: &#8377;{product.price}</p>
           <p className="text-2xl font-medium text-gray-700">
-            MRP: ${product.offerPrice}
+            MRP: &#8377;{product.offerPrice}
           </p>
           <span className="text-gray-500/70">(inclusive of all taxes)</span>
         </div>
@@ -90,13 +90,13 @@ const ProductDetails = ({ product }) => {
             <div className="w-full text-green-600">
               <button
                 className="w-full py-3.5 cursor-pointer font-medium bg-gray-100 text-gray-800/80 hover:bg-gray-200 transition"
-                onClick={() => handleAddClick(product._id)}
+                onClick={() => handleAddToCart(product._id)}
               >
                 Add to Cart
               </button>
             </div>
 
-            <button className="w-full py-3.5 cursor-pointer font-medium bg-green-800 text-white hover:bg-green-700 transition">
+            <button onClick={() => handleBuyNow(product._id)} className="w-full py-3.5 cursor-pointer font-medium bg-green-800 text-white hover:bg-green-700 transition">
               Buy Now
             </button>
           </div>

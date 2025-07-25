@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./pages/Layout.jsx";
 import Home from "./pages/Home.jsx";
 import Login from "./pages/user/Login.jsx";
@@ -23,6 +23,7 @@ import MyOrders from "./pages/user/MyOrders.jsx";
 import ProductList from "./pages/admin/ProductList.jsx";
 import OrderList from "./pages/admin/OrderList.jsx";
 import { useLocation } from "react-router-dom";
+import { UserContext } from "./context/UserContext.jsx";
 
 const App = () => {
   const location = useLocation();
@@ -30,6 +31,8 @@ const App = () => {
   const hideFooterRoutes = ["/admin-login"];
   const shouldShowFooter =
     !admin && !hideFooterRoutes.includes(location.pathname);
+
+  const { user } = useContext(UserContext);
 
   return (
     <>
@@ -39,8 +42,14 @@ const App = () => {
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/login"
+            element={user ? <Navigate to="/" /> : <Login />}
+          />
+          <Route
+            path="/signup"
+            element={user ? <Navigate to="/" /> : <Signup />}
+          />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:category" element={<ProductCategory />} />
           <Route path="/products/:category/:id" element={<ProductListing />} />

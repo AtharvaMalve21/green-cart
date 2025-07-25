@@ -46,3 +46,63 @@ export const newsLetterEmailTemplate = (userEmail) => {
   </html>
   `;
 };
+
+export const orderPlacedEmailTemplate = (
+  username,
+  orderId,
+  totalAmount,
+  shippingAddress
+) => {
+  const { firstName, lastName, email, street, state, zipcode, phone } =
+    shippingAddress;
+
+  return `
+    <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f3fdf5; padding: 30px; color: #2e7d32;">
+      <div style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 8px; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
+        <h2 style="color: #388e3c; text-align: center;">🌿 Green-Cart Order Confirmation</h2>
+        
+        <p>Hello <strong>${username}</strong>,</p>
+        <p>Thank you for your order! Your order has been successfully placed and is now being processed. 🌱</p>
+
+        <h3 style="color: #2e7d32;">📦 Order Summary</h3>
+        <table style="width: 100%; font-size: 15px; border-collapse: collapse;">
+          <tr>
+            <td style="padding: 8px 0;"><strong>Order ID:</strong></td>
+            <td style="padding: 8px 0;">${orderId}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0;"><strong>Total Amount:</strong></td>
+            <td style="padding: 8px 0;">₹${totalAmount}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0;"><strong>Payment Status:</strong></td>
+            <td style="padding: 8px 0;">Pending</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0;"><strong>Order Status:</strong></td>
+            <td style="padding: 8px 0;">Processing</td>
+          </tr>
+        </table>
+
+        <h3 style="color: #2e7d32;">🚚 Shipping Address</h3>
+        <p style="line-height: 1.6; margin: 0 0 10px 0;">
+          ${firstName} ${lastName}<br/>
+          ${street}<br/>
+          ${state}, ${zipcode}<br/>
+          ${email}<br/>
+          📞 ${phone}
+        </p>
+
+        <p style="margin-top: 30px;">We’ll send you another email when your items are on the way!</p>
+
+        <p style="margin-top: 30px;">Thank you for shopping with <strong style="color: #1b5e20;">Green-Cart</strong>! 💚</p>
+
+        <hr style="margin: 40px 0; border: none; border-top: 1px solid #c8e6c9;" />
+
+        <footer style="font-size: 13px; color: #666; text-align: center;">
+          Need help? Contact our <a href="${process.env.CLIENT_URI}/support" style="color: #2e7d32; text-decoration: underline;">support team</a>.
+        </footer>
+      </div>
+    </div>
+  `;
+};

@@ -1,27 +1,15 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { CartItemContext } from "../context/CartItemContext.jsx";
 import { Link } from "react-router-dom";
-import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import OrderSummary from "../components/OrderSummary.jsx";
+import OrderSummary from "../components/user/OrderSummary.jsx";
 
 const Cart = () => {
-  const [isOrderPlaced, setIsOrderPlaced] = useState(false);
-  const [showAddress, setShowAddress] = React.useState(false);
   const { cartItems, fetchCartDetails, removeItemFromCart, updateQuantity } =
     useContext(CartItemContext);
   const navigate = useNavigate();
 
-  console.log(cartItems);
-
   const URI = import.meta.env.VITE_BACKEND_URI;
-
-  const placeOrder = () => {
-    toast.success(
-      `Order Placed successfully. Your total bill including gst is Rs. ${totalAmount.total}`
-    );
-    setIsOrderPlaced(true);
-  };
 
   const totalAmount = useMemo(() => {
     const subtotal = cartItems.reduce(
@@ -46,7 +34,9 @@ const Cart = () => {
         <h1 className="text-3xl font-medium mb-6">
           Shopping Cart{" "}
           <span className="text-sm text-green-500">
-            {cartItems?.length} {cartItems?.length === 1 ? " Item" : "Items"}
+            {cartItems
+              ? cartItems.reduce((acc, item) => acc + item.quantity, 0)
+              : 0} {cartItems.length < 2 ? "item" : "items"}
           </span>
         </h1>
 
@@ -118,7 +108,7 @@ const Cart = () => {
             </div>
 
             <p className="text-center text-gray-700 font-medium">
-              ₹{product.offerPrice * product.quantity}
+              &#8377;{product.offerPrice * product.quantity}
             </p>
             <button
               onClick={() => removeItemFromCart(product._id)}
@@ -167,14 +157,7 @@ const Cart = () => {
         </Link>
       </div>
 
-      <OrderSummary
-        showAddress={showAddress}
-        setShowAddress={setShowAddress}
-        placeOrder={placeOrder}
-        totalAmount={totalAmount}
-        isOrderPlaced={isOrderPlaced}
-      
-      />
+      <OrderSummary totalAmount={totalAmount} cartItems={cartItems} />
     </div>
   );
 };

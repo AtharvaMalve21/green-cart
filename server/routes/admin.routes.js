@@ -4,6 +4,7 @@ import {
   adminLogout,
   getAdminProfile,
   findAllProducts,
+  getUserOrders,
 } from "../controllers/admin.controller.js";
 
 import { isAdmin } from "../middleware/auth.middleware.js";
@@ -19,7 +20,8 @@ router.get("/logout", isAdmin, adminLogout);
 //Admin-Profile
 router.get("/profile", isAdmin, getAdminProfile);
 
-//Admin-Find All the Listed Products
 router.get("/products", isAdmin, findAllProducts);
+
+router.get("/orders", isAdmin, getUserOrders);
 
 export default router;

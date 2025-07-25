@@ -11,6 +11,9 @@ import adminRoutes from "./routes/admin.routes.js";
 import productRoutes from "./routes/product.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
 import newsletterRoutes from "./routes/newsletter.routes.js";
+import orderRoutes from "./routes/order.routes.js";
+import paymentRoutes from "./routes/payment.routes.js";
+import addressRoutes from "./routes/address.routes.js";
 
 dotenv.config();
 const app = express();
@@ -40,6 +43,9 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/product", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/message", newsletterRoutes);
+app.use("/api/order", orderRoutes);
+app.use("/api/payment", paymentRoutes);
+app.use("/api/address", addressRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Green Cart!." });

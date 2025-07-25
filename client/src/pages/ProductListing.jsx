@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import RelatedProducts from "../components/RelatedProducts";
@@ -15,15 +15,23 @@ const ProductListing = () => {
   );
   const [quantities, setQuantities] = useState({});
 
+  const navigate = useNavigate();
+
   const { category, id } = useParams();
   const URI = import.meta.env.VITE_BACKEND_URI;
   const { addToCart } = useContext(CartItemContext);
-  const navigate = useNavigate();
 
-  const handleAddClick = (productId) => {
+  const handleAddToCart = (productId) => {
     const newQuantities = { ...quantities, [productId]: 1 };
     setQuantities(newQuantities);
     addToCart(productId, 1);
+  };
+
+  const handleBuyNow = (productId) => {
+    const newQuantities = { ...quantities, [productId]: 1 };
+    setQuantities(newQuantities);
+    addToCart(productId, 1);
+    navigate("/cart");
   };
 
   const fetchProductDetails = async () => {
@@ -59,7 +67,11 @@ const ProductListing = () => {
           <BreadCrumb product={product} />
 
           {/* Product View */}
-          <ProductDetails product={product} />
+          <ProductDetails
+            handleAddToCart={handleAddToCart}
+            product={product}
+            handleBuyNow={handleBuyNow}
+          />
 
           {/* Related Products */}
           <RelatedProducts

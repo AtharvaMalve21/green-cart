@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 import Product from "../models/product.model.js";
+import Order from "../models/order.model.js";
 
 export const adminLogin = async (req, res) => {
   try {
@@ -113,6 +114,24 @@ export const findAllProducts = async (req, res) => {
     });
   } catch (err) {
     return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+export const getUserOrders = async (req, res) => {
+  try {
+    
+    const orders = await Order.find({}).populate("orderItems.product address");
+
+    return res.status(200).json({
+      success: true,
+      data: orders,
+      message: "Orders data fetched",
+    });
+  } catch (err) {
+    res.status(500).json({
       success: false,
       message: err.message,
     });
