@@ -3,7 +3,6 @@ import Address from "../models/address.model.js";
 
 export const addAddress = async (req, res) => {
   try {
-    
     //authenticate user
     const userId = req.user._id;
     const user = await User.findById(userId);
@@ -100,7 +99,9 @@ export const getAddress = async (req, res) => {
       });
     }
 
-    const savedAddresses = await Address.find({ user: userId });
+    const savedAddresses = await Address.find({ user: userId }).sort({
+      createdAt: -1,
+    });
     return res.status(200).json({
       success: true,
       data: savedAddresses,

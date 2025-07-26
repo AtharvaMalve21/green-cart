@@ -71,8 +71,8 @@ const OrderSummary = ({ totalAmount, cartItems }) => {
 
       if (data.success) {
         toast.success(data.message);
-        setShowModal(false);
         await fetchUserAddress();
+        setShowModal(false);
       }
     } catch (err) {
       toast.error(err?.response?.data?.message || "Failed to add address");
