@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  server:
+    build: ./server
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./server/.env
+    restart: always
+    networks:
+      - greencart-network
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    command: ["npm", "run", "dev"]
+
+  client:
+    build: ./client
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./client/.env
+    restart: always
+    depends_on:
+      - server
+    networks:
+      - greencart-network
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+
+networks:
+  greencart-network:
+    driver: bridge
